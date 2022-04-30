@@ -1,0 +1,56 @@
+{
+  "uid" : "a53131e7fe4d4e85",
+  "name" : "successfulOrderCreationWithDifferentColors[2]",
+  "fullName" : "OrderCreationTest.successfulOrderCreationWithDifferentColors[2]",
+  "historyId" : "25f3794eb1193bf736660d9b7ff54cfa",
+  "time" : {
+    "start" : 1651324377529,
+    "stop" : 1651324377929,
+    "duration" : 400
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "package",
+    "value" : ""
+  }, {
+    "name" : "testClass",
+    "value" : "OrderCreationTest"
+  }, {
+    "name" : "testMethod",
+    "value" : "successfulOrderCreationWithDifferentColors[2]"
+  }, {
+    "name" : "suite",
+    "value" : "OrderCreationTest"
+  }, {
+    "name" : "host",
+    "value" : "AlexLinux"
+  }, {
+    "name" : "thread",
+    "value" : "11080@AlexLinux.main(1)"
+  }, {
+    "name" : "framework",
+    "value" : "junit4"
+  }, {
+    "name" : "language",
+    "value" : "java"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "a53131e7fe4d4e85.json",
+  "parameterValues" : [ ]
+}
