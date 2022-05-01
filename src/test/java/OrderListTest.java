@@ -1,10 +1,11 @@
 import org.junit.Test;
+import util.BaseOrderTest;
 import util.BaseTest;
 import model.OrderList;
 
 import static org.junit.Assert.assertTrue;
 
-public class OrderListTest extends BaseTest {
+public class OrderListTest extends BaseOrderTest {
 
     @Test
     public void successfulOrderListRequest() {

@@ -1,14 +1,20 @@
+import model.ApiResponseWithMessage;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import util.BaseTest;
+import util.BaseCourierAuthorizationTest;
 import model.Courier;
 import model.CourierAuth;
 import model.CourierAuthDetails;
 
 import java.util.UUID;
 
-public class CourierAuthorizationTest extends BaseTest {
+import static org.junit.Assert.assertEquals;
+import static util.BaseCourierTest.*;
+
+public class CourierAuthorizationTest extends BaseCourierAuthorizationTest {
+    private static final String AUTH_ATTEMPT_SHOULD_HAVE_FAILED = "Auth attempt should have failed!";
+    private static final String INSUFFICIENT_DATA = "Недостаточно данных для входа";
     private static Courier courier;
     private static CourierAuthDetails courierAuthDetails;
 
@@ -17,46 +23,40 @@ public class CourierAuthorizationTest extends BaseTest {
         courier = new Courier("enataeva" + UUID.randomUUID(),
                 "password",
                 "Elena");
-        createCourier(courier,
-                201,
-                "ok",
-                true);
+        createCourier(courier);
     }
 
     @AfterClass
     public static void tearDown() {
-        DELETECourier(courierAuthDetails);
+        deleteCourier(courierAuthDetails);
     }
 
     @Test
     public void successfulAuth() {
         CourierAuth courierAuth = new CourierAuth(courier.getLogin(), courier.getPassword());
-        courierAuthDetails = authorizeCourier(courierAuth, 200);
+        courierAuthDetails = authorizeCourier(courierAuth);
     }
 
-//    Что значит "передать все обязательные поля"? С нуллами апишка не возвращает ответ вообще
     @Test
     public void unsuccessfulAuthWithoutAllFields() {
-        CourierAuth courierAuth1 = new CourierAuth("", courier.getPassword());
-        CourierAuth courierAuth2 = new CourierAuth(courier.getLogin(), "");
+        CourierAuth courierAuth1 = new CourierAuth(null, courier.getPassword());
+        CourierAuth courierAuth2 = new CourierAuth(courier.getLogin(), null);
 
-        authorizeCourier(courierAuth1,
-                400,
-                "message",
-                "Недостаточно данных для входа");
-        authorizeCourier(courierAuth2,
-                400,
-                "message",
-                "Недостаточно данных для входа");
+        ApiResponseWithMessage response1 = unsuccessfullyAuthorizeCourier(courierAuth1);
+
+        assertEquals("", INSUFFICIENT_DATA, response1.getMessage());
+
+        ApiResponseWithMessage response2 = unsuccessfullyAuthorizeCourier(courierAuth2);
+
+        assertEquals("", INSUFFICIENT_DATA, response2.getMessage());
     }
 
     @Test
     public void unsuccessfulAuthForNonExistingCourier() {
         CourierAuth courierAuth1 = new CourierAuth(UUID.randomUUID().toString(), "myPassword");
 
-        authorizeCourier(courierAuth1,
-                404,
-                "message",
-                "Учетная запись не найдена");
+        ApiResponseWithMessage response = unsuccessfullyAuthorizeCourier(courierAuth1);
+
+        assertEquals(AUTH_ATTEMPT_SHOULD_HAVE_FAILED, "Учетная запись не найдена", response.getMessage());
     }
 }

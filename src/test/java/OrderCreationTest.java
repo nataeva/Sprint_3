@@ -1,14 +1,18 @@
+import model.OrderResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import util.BaseOrderTest;
 import util.BaseTest;
 import model.Order;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.junit.Assert.assertNotNull;
+
 @RunWith(Parameterized.class)
-public class OrderCreationTest extends BaseTest {
+public class OrderCreationTest extends BaseOrderTest {
 
     @Parameterized.Parameter
     public String[] colors;
@@ -35,6 +39,8 @@ public class OrderCreationTest extends BaseTest {
                 "comment",
                 colors);
 
-        createOrder(order, 201, "track");
+        OrderResponse response = createOrder(order);
+
+        assertNotNull("Track should be present!", response.getTrack());
     }
 }
